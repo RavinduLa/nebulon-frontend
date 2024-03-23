@@ -1,10 +1,10 @@
 
 import {useAuth0} from "@auth0/auth0-react";
-import {useState} from "react";
+import React, {useState} from "react";
 
 const TokenInfo = () => {
   const {user, getAccessTokenSilently} = useAuth0();
-  const {tokenString, setTokenString} = useState("empty");
+  const [tokenString, setTokenString] = useState("empty");
 
   const getAccessToken = async () => {
       const token = await getAccessTokenSilently();
