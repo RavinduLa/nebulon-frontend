@@ -1,5 +1,5 @@
 /*
-* @Author = A.M.W.W.R.L. Wataketiya
+* @Author = A.M.W.W.R.L. Wataketiya (MS2346644)
 * Main Navigation bar
 * Includes login and logout buttons
 * */
