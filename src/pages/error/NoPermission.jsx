@@ -19,3 +19,5 @@ function NoPermission() {
         </Container>
     );
 }
+
+export default NoPermission;
