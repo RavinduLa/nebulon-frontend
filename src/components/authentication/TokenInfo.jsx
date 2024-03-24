@@ -5,10 +5,17 @@ import React, {useState} from "react";
 const TokenInfo = () => {
   const {user, getAccessTokenSilently} = useAuth0();
   const [tokenString, setTokenString] = useState("empty");
+  const [rolesArray, setRolesArray] = useState(["none"]);
 
   const getAccessToken = async () => {
       const token = await getAccessTokenSilently();
       setTokenString(token);
+  }
+
+  const getUserRoles = () => {
+    const roles = user['https://nebulon-api.com/roles'];
+    console.log("Roles : " + roles[0]);
+    setRolesArray(roles);
   }
 
   return(
@@ -19,9 +26,21 @@ const TokenInfo = () => {
 
           <br/>
           <br/>
-
+          <text>Token String</text>
+          <br/>
           <text>
               {tokenString}
+          </text>
+          <br/>
+          <br/>
+          <text>Roles</text>
+          <br/>
+          <button onClick={getUserRoles}>
+              Get roles
+          </button>
+          <br/>
+          <text>
+              {rolesArray[0]}
           </text>
       </div>
   );
