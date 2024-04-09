@@ -8,12 +8,19 @@
 
 import axios from "axios";
 import base_url from "./deployment.json";
+import {Component} from "react";
+import AuthHeader from "./AuthHeader";
 
 const URL_FOR_ARTICLE = "/api/articles";
 
+const API_URL = base_url.localAddress + URL_FOR_ARTICLE;
 const API_URL_LOCAL = base_url.localAddress + URL_FOR_ARTICLE;
 const API_URL_REMOTE = base_url.remoteAddress + URL_FOR_ARTICLE;
 
-class ArticleService {
-
+class ArticleService extends Component{
+    createArticle(article) {
+        return axios.post(API_URL, article, AuthHeader);
+    }
 }
+
+export default ArticleService;
