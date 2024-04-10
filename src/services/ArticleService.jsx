@@ -19,7 +19,7 @@ const API_URL_REMOTE = base_url.remoteAddress + URL_FOR_ARTICLE;
 
 class ArticleService extends Component{
     static createArticle = (article) => {
-        return axios.post(API_URL, article, AuthHeader);
+        return axios.post(API_URL + "/create", article, AuthHeader);
     }
 }
 

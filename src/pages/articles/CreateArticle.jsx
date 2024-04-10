@@ -17,6 +17,7 @@ class  CreateArticle extends Component {
         this.state = this.initialState;
         this.state.showSuccess = false;
         this.state.showFailure = false;
+        this.state.email = props.userEmail;
     }
 
     initialState = {
@@ -33,10 +34,12 @@ class  CreateArticle extends Component {
 
     submitArticleToRemote = async (event) => {
         event.preventDefault();
+        console.log('User email :', this.state.email);
         if (this.state.title !== '') {
             let article = {
                 title : this.state.title,
                 content: this.state.content,
+                authorId: this.state.email
             }
             await ArticleService.createArticle(article).then((data) => {
                 if(data != null){

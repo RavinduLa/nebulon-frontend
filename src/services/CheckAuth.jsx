@@ -13,13 +13,13 @@ import LoginNeeded from "../pages/error/LoginNeeded";
 
 const CheckAuth = (Component) => {
   const AuthRoute = () => {
-      const { isLoading, isAuthenticated } = useAuth0();
+      const { isLoading, isAuthenticated, user } = useAuth0();
       return ( isLoading?
               <div>
                   <CardText>Loading...</CardText>
               </div>:
               isAuthenticated ?
-                  <Component /> :
+                  <Component userEmail = {user.email} /> :
                   <LoginNeeded />
       );
 
