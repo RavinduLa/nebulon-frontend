@@ -5,18 +5,23 @@
 * Wrapping will check whether the user has authenticated themselves and if the user is not authenticated will force them to log in
 * */
 
-import React from "react";
-import {Navigate} from 'react-router-dom';
+import React, {useEffect, useState} from "react";
+import {useNavigate} from 'react-router-dom';
 import {useAuth0} from "@auth0/auth0-react";
+import {CardText} from "react-bootstrap";
+import LoginNeeded from "../pages/error/LoginNeeded";
 
 const CheckAuth = (Component) => {
-    const { isAuthenticated } = useAuth0();
   const AuthRoute = () => {
-    if(isAuthenticated) {
-        return <Component />
-    } else {
-        return <Navigate to = "/login-needed" />
-    }
+      const { isLoading, isAuthenticated } = useAuth0();
+      return ( isLoading?
+              <div>
+                  <CardText>Loading...</CardText>
+              </div>:
+              isAuthenticated ?
+                  <Component /> :
+                  <LoginNeeded />
+      );
 
   };
   return AuthRoute;

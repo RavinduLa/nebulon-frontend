@@ -5,3 +5,5 @@
 
 export const userEmailString = "user-email";
 export const userAccessTokenString = "user-access-token";
+
+export const userLoginStatusString = "user-login-status";

@@ -5,56 +5,72 @@
 * */
 
 import {useAuth0} from "@auth0/auth0-react";
-import {userEmailString, userAccessTokenString} from "../../constants/UserConstants";
+import {userEmailString, userAccessTokenString, userLoginStatusString} from "../../constants/UserConstants";
 import {Button, Container, Nav, Navbar, NavDropdown} from "react-bootstrap";
 import {Link} from "react-router-dom";
 
 function MainNavbar(props) {
-    const {loginWithRedirect, logout, user, isAuthenticated, isLoading, getAccessTokenSilently} = useAuth0();
+    const {loginWithRedirect, logout, user, isAuthenticated, isLoading, getAccessTokenSilently, handleRedirectCallback} = useAuth0();
 
     //Write the user's email to sessionStorage
     const setUserEmailToSessionStorage = async (email) => {
-        await sessionStorage.setItem(userEmailString, email);
+        await window.sessionStorage.setItem(userEmailString, email);
     }
 
     //Set the user's access token to the session storage
-    const setAccessTokenToSessionStorage = async () => {
-        const token = await getAccessTokenSilently();
-        await sessionStorage.setItem(userAccessTokenString, token);
+    const setAccessTokenToSessionStorage = async (token) => {
+        //const token = await getAccessTokenSilently();
+        await window.sessionStorage.setItem(userAccessTokenString, token);
+    }
+
+    const setLoginStatusToSessionStorage = async (status) => {
+      await window.sessionStorage.setItem(userLoginStatusString, status);
     }
 
     //Set user related variables into the session storage
-    const setSessionStorage = async () => {
+    /* const setSessionStorage = async () => {
+        console.log('Setting session storage.');
       await setUserEmailToSessionStorage(user.email);
       await setAccessTokenToSessionStorage();
-    }
+      await setLoginStatusToSessionStorage(true);
+
+      console.log('Session storage set.');
+    } */
 
     //Remove the user's email from the session storage
     const removeUserEmailFromSessionStorage = () => {
-        sessionStorage.removeItem(userEmailString);
+        window.sessionStorage.removeItem(userEmailString);
     }
 
     //Method to remove access token from the session storage
     const removeUserAccessTokenFromSessionStorage = () => {
-      sessionStorage.removeItem(userAccessTokenString);
+        window.sessionStorage.removeItem(userAccessTokenString);
+    }
+
+    const removeUserLoginStatusFromSessionStorage = () => {
+        window.sessionStorage.removeItem(userLoginStatusString);
     }
 
     //Clears the session storage of user related variables
     const clearSessionStorage = () => {
+        console.log('Clearing session storage.');
       removeUserEmailFromSessionStorage();
       removeUserAccessTokenFromSessionStorage();
+      console.log("Session storage cleared.");
+      //removeUserLoginStatusFromSessionStorage();
     }
 
     //Method to login the user
-    const loginUser = async () => {
+    /*const loginUser = async () => {
         await loginWithRedirect();
-        setSessionStorage();
-    }
+        await setSessionStorage();
+    } */
 
     //Method to logout the user
-    const logoutUser = () => {
+    const logoutUser = async () => {
         clearSessionStorage();
-        logout({logoutParams: {returnTo: window.location.origin}});
+        await logout({logoutParams: {returnTo: window.location.origin}});
+        await setLoginStatusToSessionStorage(false);
     }
 
     return(
@@ -74,7 +90,29 @@ function MainNavbar(props) {
                                 )
                                 :
                                 (
-                                    <Button onClick={loginUser} className={'nav-link btn btn-secondary m-1'}>
+                                    <Button onClick={
+                                        () => {
+                                            loginWithRedirect().then(() => {
+                                                handleRedirectCallback().then(() => {
+                                                    console.log("Auth0 isLoading value : ", isLoading);
+                                                    setUserEmailToSessionStorage(user.email).then(() => {
+                                                        getAccessTokenSilently().then((token) => {
+                                                            setAccessTokenToSessionStorage(token).then(() => {
+                                                                setLoginStatusToSessionStorage(true).then(r => {
+                                                                    console.log('Set login status to session storage...')
+                                                                });
+                                                            });
+                                                        });
+                                                    });
+                                                });
+
+                                            });
+                                            /*await setUserEmailToSessionStorage(user.email);
+                                            let token = await getAccessTokenSilently();
+                                            await setAccessTokenToSessionStorage(token);
+                                            await setLoginStatusToSessionStorage(true);*/
+                                        }
+                                    } className={'nav-link btn btn-secondary m-1'}>
                                         Login
                                     </Button>
                                 )
