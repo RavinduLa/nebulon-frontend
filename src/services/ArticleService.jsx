@@ -18,7 +18,7 @@ const API_URL_LOCAL = base_url.localAddress + URL_FOR_ARTICLE;
 const API_URL_REMOTE = base_url.remoteAddress + URL_FOR_ARTICLE;
 
 class ArticleService extends Component{
-    createArticle(article) {
+    static createArticle = (article) => {
         return axios.post(API_URL, article, AuthHeader);
     }
 }
