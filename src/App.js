@@ -9,6 +9,8 @@ import MainNavbar from "./components/navbars/MainNavbar";
 import LoginNeeded from "./pages/error/LoginNeeded";
 import NoPermission from "./pages/error/NoPermission";
 import CreateArticle from "./pages/articles/CreateArticle";
+import ArticleMain from "./pages/articles/ArticleMain";
+import ViewAllArticles from "./pages/articles/ViewAllArticles";
 
 function App() {
   return (
@@ -23,7 +25,9 @@ function App() {
             <Route path={"/no-permission"} element={<NoPermission/>} />
 
             {/*Articles*/}
-            <Route path={"/articles/create-article"} element={<CreateArticle/>} />
+            <Route path={"/articles-main"} element={<ArticleMain/>} />
+            <Route path={"/create-article"} element={<CreateArticle/>} />
+            <Route path={"/view-articles"} element={<ViewAllArticles />} />
 
 
         </Routes>
