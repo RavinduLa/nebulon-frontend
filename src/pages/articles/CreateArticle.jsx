@@ -106,7 +106,7 @@ class  CreateArticle extends Component {
     }
 
     render() {
-        const {title, content, summary} = this.state;
+        const {title, summary} = this.state;
         const { editorState } = this.state;
 
         return(
