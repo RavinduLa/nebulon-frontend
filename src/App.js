@@ -11,6 +11,7 @@ import NoPermission from "./pages/error/NoPermission";
 import CreateArticle from "./pages/articles/CreateArticle";
 import ArticleMain from "./pages/articles/ArticleMain";
 import ViewAllArticles from "./pages/articles/ViewAllArticles";
+import '../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 function App() {
   return (

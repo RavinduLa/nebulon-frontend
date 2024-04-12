@@ -9,8 +9,12 @@ import ArticleService from "../../services/ArticleService";
 import {Button, Card, Col, Form, Row} from "react-bootstrap";
 import Toast1 from "../../components/toasts/Toast1";
 import Toast2 from "../../components/toasts/Toast2";
+import {EditorState, convertToRaw} from "draft-js";
+import { Editor } from 'react-draft-wysiwyg';
+import draftToHtml from 'draftjs-to-html';
 
 
+const getHtml = editorState =>   draftToHtml(convertToRaw(editorState.getCurrentContent()));
 class  CreateArticle extends Component {
     constructor(props) {
         super(props);
@@ -23,6 +27,13 @@ class  CreateArticle extends Component {
     initialState = {
         title: '',
         content: '',
+        summary: '',
+        editorState: EditorState.createEmpty(),
+    }
+
+    onEditorStateChange = editorState => {
+        this.setState({ editorState });
+        this.setState({content: getHtml(this.state.editorState)});
     }
 
     componentDidMount = async () => {
@@ -36,10 +47,12 @@ class  CreateArticle extends Component {
         event.preventDefault();
         console.log('User email :', this.state.email);
         if (this.state.title !== '') {
+
             let article = {
                 title : this.state.title,
                 content: this.state.content,
-                authorId: this.state.email
+                authorId: this.state.email,
+                summary: this.state.summary
             }
             await ArticleService.createArticle(article).then((data) => {
                 if(data != null){
@@ -61,6 +74,8 @@ class  CreateArticle extends Component {
     resetForm = async () => {
         this.setState({title : ''});
         this.setState({content : ''});
+        this.setState({summary : ''});
+        this.setState({editorState : EditorState.createEmpty()});
     }
 
     labelStyle = {
@@ -91,11 +106,12 @@ class  CreateArticle extends Component {
     }
 
     render() {
-        const {title, content} = this.state;
+        const {title, content, summary} = this.state;
+        const { editorState } = this.state;
 
         return(
             <div style={this.backgroundStyle}>
-                <div className={'container'} style={this.containerStyle}>
+                <div className={"container-fluid"} style={this.containerStyle}>
                     <div style={{'display': this.state.showSuccess ? 'block' : 'none'}}>
                         <Toast1
                             children={{
@@ -138,18 +154,39 @@ class  CreateArticle extends Component {
                                 </Form.Group>
                                 <Form.Group>
                                     <div style={this.labelStyle}>
-                                        <Form.Label>Content</Form.Label>
+                                        <Form.Label>Summary</Form.Label>
                                     </div>
                                     <Form.Control
                                         as="textarea"
-                                        rows = {17}
-                                        name={'content'}
-                                        value={content}
+                                        rows = {13}
+                                        name={'summary'}
+                                        value={summary}
                                         onChange={this.onChange}
                                     />
                                 </Form.Group>
+
+
                             </Card.Body>
+
+
+
+                            <Card.Footer>
+                                <Form.Group>
+                                    <div style={this.labelStyle}>
+                                        <Form.Label>Content</Form.Label>
+                                    </div>
+                                    <Editor
+                                        editorState={editorState}
+                                        wrapperClassName="rich-editor demo-wrapper"
+                                        editorClassName="demo-editor"
+                                        onEditorStateChange={this.onEditorStateChange}
+                                        placeholder="Type the content here" />
+                                </Form.Group>
+
+                            </Card.Footer>
                         </Card>
+
+
 
 
                     </Form>
