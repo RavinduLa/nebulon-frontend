@@ -21,6 +21,10 @@ class ArticleService extends Component{
     static createArticle = (article) => {
         return axios.post(API_URL + "/create", article, AuthHeader);
     }
+
+    static getAllArticles = () => {
+        return axios.get(API_URL + "/getAll", AuthHeader);
+    }
 }
 
 export default ArticleService;
