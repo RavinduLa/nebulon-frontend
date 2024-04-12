@@ -37,9 +37,11 @@ class ViewAllArticles extends Component{
                             this.state.articles.map( (article) => (
                                 <div>
                                     <h4>{article.title}</h4>
-                                    <CardText>
-                                        {article.content}
-                                    </CardText>
+                                    {/*<div dangerouslySetInnerHTML={{ __html:article.content }} />*/}
+                                    <div>
+                                        {article.summary}
+                                    </div>
+
                                     <br/>
                                 </div>
                             ))
