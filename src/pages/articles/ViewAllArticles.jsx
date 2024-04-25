@@ -1,6 +1,6 @@
 import {Component} from "react";
 import ArticleService from "../../services/ArticleService";
-import {Card, CardText, CardTitle, Col, Row} from "react-bootstrap";
+import {Button, Card, CardText, CardTitle, Col, Row} from "react-bootstrap";
 import {Link} from "react-router-dom";
 
 
@@ -26,6 +26,10 @@ class ViewAllArticles extends Component{
 
     }
 
+    navigateToArticleDetailReaderView(event, id) {
+        window.location = `/article-detail-reader/${id}`;
+    }
+
     articleItemHeaderStyle = {
         float : 'left',
         textAlign: 'left',
@@ -41,17 +45,21 @@ class ViewAllArticles extends Component{
         textAlign: 'left',
         color : '#8C8AFF'
     }
-    commentLinkStyle = {
+    commentButtonStyle = {
         float: 'left',
         textAlign: 'left',
-        color : '#8C8AFF',
+        background: '#8C8AFF',
+        borderColor: '#8C8AFF',
+        color : 'black',
         marginLeft: '20px'
     }
 
-    readLinkStyle = {
+    readButtonStyle = {
         float: 'left',
         textAlign: 'left',
-        color : '#8C8AFF',
+        background: '#8C8AFF',
+        borderColor: '#8C8AFF',
+        color : 'black',
     }
 
     render() {
@@ -77,8 +85,12 @@ class ViewAllArticles extends Component{
                                         </Card.Body>
 
                                         <Card.Footer className={'border-0 bg-transparent'}>
-                                            <Link style={this.readLinkStyle} to={'/'}>Read</Link>
-                                            <Link style={this.commentLinkStyle} to={'/'}>Comment</Link>
+                                            <Button style={this.readButtonStyle}
+                                                    onClick={ event => this.navigateToArticleDetailReaderView(this, article.id)}
+                                            >
+                                                Read
+                                            </Button>
+                                            <Button style={this.commentButtonStyle}>Comment</Button>
                                         </Card.Footer>
 
                                     </Card>
