@@ -29,6 +29,10 @@ class ArticleService extends Component{
     static getArticleById = (id) => {
         return axios.get(API_URL + `/getById/${id}`, AuthHeader);
     }
+
+    static getArticlesByAuthorId = (authorId) => {
+        return axios.get(API_URL + `/getByAuthorId/${authorId}`, AuthHeader)
+    }
 }
 
 export default ArticleService;

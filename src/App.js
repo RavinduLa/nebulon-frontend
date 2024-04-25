@@ -13,6 +13,7 @@ import ArticleMain from "./pages/articles/ArticleMain";
 import ViewAllArticles from "./pages/articles/ViewAllArticles";
 import '../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import ArticleDetailReaderView from "./pages/articles/ArticleDetailReaderView";
+import ViewAuthorArticles from "./pages/articles/ViewAuthorArticles";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
             <Route path={"/articles-main"} element={<ArticleMain/>} />
             <Route path={"/create-article"} element={<CreateArticle/>} />
             <Route path={"/view-articles"} element={<ViewAllArticles />} />
+            <Route path={"/view-articles-author"} element={<ViewAuthorArticles />} />
             <Route path={"/article-detail-reader/:id"} element={<ArticleDetailReaderView />} />
 
 

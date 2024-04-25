@@ -16,6 +16,8 @@ class ArticleMain extends Component{
                 <Link to={'/create-article'}>Create Article</Link>
                 <br />
                 <Link to={'/view-articles'}>View All Articles</Link>
+                <br/>
+                <Link to={'/view-articles-author'}>View Your Articles</Link>
             </div>
         );
     }
