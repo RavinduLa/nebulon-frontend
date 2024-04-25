@@ -32,7 +32,7 @@ class ViewAuthorArticles extends Component {
     }
 
     navigateToArticleDetailAuthorView(event, id) {
-        window.location = `/article-detail-author/${id}`;
+        window.location = `/article-detail-author-preview/${id}`;
     }
 
     articleItemHeaderStyle = {
