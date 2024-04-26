@@ -35,6 +35,10 @@ class ViewAuthorArticles extends Component {
         window.location = `/article-detail-author-preview/${id}`;
     }
 
+    navigateToArticleEditView(event, id) {
+        window.location = `/article-edit-view/${id}`;
+    }
+
     articleItemHeaderStyle = {
         float : 'left',
         textAlign: 'left',
@@ -51,6 +55,15 @@ class ViewAuthorArticles extends Component {
         color : '#8C8AFF'
     }
     deleteButtonStyle = {
+        float: 'left',
+        textAlign: 'left',
+        background: '#f9436a',
+        borderColor: '#f9436a',
+        color : 'black',
+        marginLeft: '20px'
+    }
+
+    editButtonStyle = {
         float: 'left',
         textAlign: 'left',
         background: '#8C8AFF',
@@ -84,7 +97,6 @@ class ViewAuthorArticles extends Component {
                                         </Card.Header>
 
                                         <Card.Body className={'bg-transparent border-0'}>
-                                            <CardText style={this.articleItemEmailStyle}>{article.authorId}</CardText>
                                             <CardText style={this.articleItemSummaryStyle}>{article.summary}</CardText>
                                         </Card.Body>
 
@@ -94,7 +106,10 @@ class ViewAuthorArticles extends Component {
                                             >
                                                 Preview
                                             </Button>
-                                            <Button style={this.deleteButtonStyle}>Edit</Button>
+                                            <Button style={this.editButtonStyle} onClick={event => this.navigateToArticleEditView(this, article.id)}
+                                            >
+                                                Edit
+                                            </Button>
                                             <Button style={this.deleteButtonStyle}>Delete</Button>
                                         </Card.Footer>
 

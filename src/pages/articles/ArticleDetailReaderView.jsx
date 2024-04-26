@@ -1,3 +1,7 @@
+/*
+* @Author = A.M.W.W.R.L. Wataketiya (MS2346644)
+* Component to view detail view for reader
+* */
 import {Component, useEffect, useState} from "react";
 import {Card, CardText, CardTitle} from "react-bootstrap";
 import {useParams, useSearchParams} from "react-router-dom";
