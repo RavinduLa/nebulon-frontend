@@ -5,8 +5,13 @@
 
 import {Component} from "react";
 import ArticleService from "../../services/ArticleService";
-import {Button, Card, CardText} from "react-bootstrap";
+import {Button, Card, CardText, Modal} from "react-bootstrap";
 import CheckAuth from "../../services/CheckAuth";
+import data from "bootstrap/js/src/dom/data";
+import Toast1 from "../../components/toasts/Toast1";
+import Toast2 from "../../components/toasts/Toast2";
+import {confirmAlert} from "react-confirm-alert";
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 class ViewAuthorArticles extends Component {
     constructor(props) {
@@ -16,8 +21,37 @@ class ViewAuthorArticles extends Component {
     }
 
     initialState = {
-        articles : []
+        articles : [],
+        showDeleteSuccess: false,
+        showDeleteFailure: false
     }
+
+    requestDelete(id) {
+
+        confirmAlert({
+            title: "Delete this article?",
+            message: "This action cannot be undone",
+            buttons: [
+                {
+                    label:"Delete",
+                    onClick: this.deleteArticle.bind(this, id)
+                },
+                {
+                    label: "Cancel",
+                    onClick: this.cancelDelete.bind(this)
+                }
+            ]
+        });
+    }
+
+    cancelDelete = () =>{
+
+    }
+
+    mockDelete = (id) => {
+
+    }
+
 
     componentDidMount() {
         console.log(`Author email : ${this.state.email}`);
@@ -33,6 +67,31 @@ class ViewAuthorArticles extends Component {
 
     navigateToArticleDetailAuthorView(event, id) {
         window.location = `/article-detail-author-preview/${id}`;
+    }
+
+    deleteArticle = async (id) => {
+        ArticleService.deleteArticle(id)
+            .then(response => response.data)
+            .then( (data) => {
+                if(data != null) {
+                    this.setState( {showDeleteSuccess : true});
+                    setTimeout(() => this.setState({showDeleteSuccess:false}),3000);
+                    this.loadArticles();
+                }
+            }).catch(error => {
+            this.setState( {showDeleteFailure : true});
+            setTimeout(() => this.setState({showDeleteFailure:false}),3000);
+        });
+    }
+
+    loadArticles = async () => {
+        ArticleService.getArticlesByAuthorId(this.state.email)
+            .then(response => response.data)
+            .then((data) => {
+                this.setState({articles : data})
+            }).catch(error => {
+            console.log("Error in getting all articles");
+        })
     }
 
     navigateToArticleEditView(event, id) {
@@ -84,7 +143,26 @@ class ViewAuthorArticles extends Component {
         return(
             <div>
                 <div className={'container'}>
+                    <div style={{'display': this.state.showDeleteSuccess ? 'block' : 'none'}}>
+                        <Toast1
+                            children={{
+                                show: this.state.showDeleteSuccess,
+                                message: "Article deleted successfully",
+                                type: 'success'
+                            }}
+                        />
+                    </div>
+                    <div style={{'display': this.state.showDeleteFailure ? 'block' : 'none'}}>
+                        <Toast2
+                            children={{
+                                show: this.state.showDeleteFailure,
+                                message: "Error when deleting the article",
+                                type: 'danger'
+                            }}
+                        />
+                    </div>
                     <h1>Your Articles</h1>
+
                     {
                         this.state.articles.length === 0?
                             <h3>No articles yet</h3> :
@@ -110,7 +188,11 @@ class ViewAuthorArticles extends Component {
                                             >
                                                 Edit
                                             </Button>
-                                            <Button style={this.deleteButtonStyle}>Delete</Button>
+                                            <Button style={this.deleteButtonStyle}
+                                                    onClick={this.requestDelete.bind(this,article.id)}
+                                            >
+                                                Delete
+                                            </Button>
                                         </Card.Footer>
 
                                     </Card>
