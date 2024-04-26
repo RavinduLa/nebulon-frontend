@@ -37,6 +37,14 @@ class ArticleService extends Component{
     static updateArticle = (article) => {
         return axios.put(API_URL + "/updateArticle", article, AuthHeader);
     }
+
+    static publishArticle = (articleId) => {
+        return axios.put(API_URL + `/publish/${articleId}`, AuthHeader);
+    }
+
+    static unPublishArticle = (articleId) => {
+        return axios.put(API_URL + `/unpublish/${articleId}`, AuthHeader);
+    }
 }
 
 export default ArticleService;

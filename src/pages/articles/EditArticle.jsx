@@ -8,11 +8,12 @@ import {useParams} from "react-router-dom";
 import ArticleService from "../../services/ArticleService";
 import Toast1 from "../../components/toasts/Toast1";
 import Toast2 from "../../components/toasts/Toast2";
-import {Button, Card, Col, Form} from "react-bootstrap";
+import {Button, Card, CardText, CardTitle, Col, Form} from "react-bootstrap";
 import {Editor} from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
 import {convertToRaw, EditorState, Modifier} from "draft-js";
 import {stateFromHTML} from 'draft-js-import-html';
+import data from "bootstrap/js/src/dom/data";
 
 
 const getHtml = editorState =>   draftToHtml(convertToRaw(editorState.getCurrentContent()));
@@ -34,6 +35,7 @@ const EditArticle = (Component) => {
     const [content, setContent] = useState('');
     const [summary, setSummary] = useState('');
     const [initialContent, setInitialContent] = useState('');
+    const [isPublished, setIsPublished] = useState(false);
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
     /*const [editorState, setEditorState] = useState( () => {
         if(content) {
@@ -55,6 +57,9 @@ const EditArticle = (Component) => {
                 setSummary(data.summary);
                 setContent(data.content);
                 setInitialContent(data.content);
+                setIsPublished(data.published);
+
+                console.log();
 
 
                 //focusEditor();
@@ -80,6 +85,44 @@ const EditArticle = (Component) => {
     const updateEditorInnerContent = () => {
         let contentState = stateFromHTML(content);
         setEditorState(EditorState.createWithContent(contentState));
+    }
+
+    const publishArticle = () => {
+        ArticleService.publishArticle(article.id)
+            .then(response => response.data)
+            .then( (data) => {
+                setIsPublished(data.published);
+                showSuccessToast();
+            })
+            .catch(error => {
+                console.log("Error in publishing article");
+                console.log("Error ", error);
+                showFailureToast();
+            })
+    }
+
+    const showSuccessToast = () => {
+        setShowSuccess(true)
+        setTimeout(() => setShowSuccess(false),3000);
+    }
+
+    const showFailureToast = () => {
+        setShowFailure(true)
+        setTimeout(() => setShowFailure(false),3000);
+    }
+
+    const unPublishArticle = () => {
+        ArticleService.unPublishArticle(article.id)
+            .then(response => response.data)
+            .then( (data) => {
+                setIsPublished(data.published);
+                showSuccessToast();
+            })
+            .catch(error => {
+                console.log("Error in un-publishing article");
+                console.log("Error ", error);
+                showFailureToast();
+            })
     }
 
     /*
@@ -197,6 +240,19 @@ const EditArticle = (Component) => {
         color : 'black'
     }
 
+    const publishButtonStyle = {
+        float : 'left',
+        margin : '5px',
+        background : '#8C8AFF',
+        color : 'black'
+    }
+
+    const unPublishButtonStyle = {
+        float : 'left',
+        margin : '5px',
+
+    }
+
     const headerButtonStyle = {
         float : 'right',
         margin : '5px',
@@ -226,6 +282,12 @@ const EditArticle = (Component) => {
                 <Form onSubmit={submitChangesToRemote} onReset={resetForm}>
                     <Card className={'bg-transparent'}>
                         <Card.Header className={'bg-transparent text-white'}>
+                            {
+                                isPublished ?
+                                    <Button style={unPublishButtonStyle} variant={'outline-secondary'} onClick={unPublishArticle}>Unpublish</Button> :
+                                    <Button style={publishButtonStyle} variant={'custom'} onClick={publishArticle}>Publish</Button>
+                            }
+
                             <Button style={headerAccentButtonStyle} variant={'custom'}  type={'submit'} className={'btn'}>Update</Button>
                             <Button style={headerButtonStyle} variant={'outline-secondary'} type={'reset'} className={'btn btn-outline-secondary'}>Discard</Button>
                         </Card.Header>
