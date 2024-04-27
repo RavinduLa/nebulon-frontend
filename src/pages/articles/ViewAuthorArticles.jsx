@@ -175,19 +175,19 @@ class ViewAuthorArticles extends Component {
                             this.state.articles.map( (article) => (
                                 <div>
 
-                                    <Card className={'card border-0 bg-transparent'}>
-                                        <Card.Header className={'bg-transparent border-0'}>
+                                    <Card className={'card'}>
+                                        <Card.Header className={'bg-transparent'}>
                                             <h2 style={this.articleItemHeaderStyle}>{article.title}</h2>
                                         </Card.Header>
 
-                                        <Card.Body className={'bg-transparent border-0'}>
+                                        <Card.Body className={''}>
                                             <CardText style={this.articleItemSummaryStyle}>{article.summary}</CardText>
 
 
 
                                         </Card.Body>
 
-                                        <Card.Footer className={'border-0 bg-transparent'}>
+                                        <Card.Footer className={''}>
                                             <Button style={this.previewButtonStyle}
                                                     onClick={ event => this.navigateToArticleDetailAuthorView(this, article.id)}
                                             >
@@ -213,8 +213,8 @@ class ViewAuthorArticles extends Component {
 
                                     <br/>
                                     <br/>
-                                    <br/>
-                                    <br/>
+
+
                                 </div>
                             ))
                     }

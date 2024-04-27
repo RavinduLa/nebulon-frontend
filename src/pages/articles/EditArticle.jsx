@@ -36,6 +36,8 @@ const EditArticle = (Component) => {
     const [summary, setSummary] = useState('');
     const [initialContent, setInitialContent] = useState('');
     const [isPublished, setIsPublished] = useState(false);
+    const [publishedDateTimeString, setPublishedDateTimeString] = useState('');
+    const [createdDateTimeString, setCreatedDateTimeString] = useState('');
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
     /*const [editorState, setEditorState] = useState( () => {
         if(content) {
@@ -58,6 +60,8 @@ const EditArticle = (Component) => {
                 setContent(data.content);
                 setInitialContent(data.content);
                 setIsPublished(data.published);
+                setPublishedDateTimeString( getDateString(data.publishedDateTime));
+                setCreatedDateTimeString( getDateString(data.createdDateTime));
 
                 console.log();
 
@@ -92,6 +96,7 @@ const EditArticle = (Component) => {
             .then(response => response.data)
             .then( (data) => {
                 setIsPublished(data.published);
+                setPublishedDateTimeString(getDateString(data.publishedDateTime));
                 showSuccessToast();
             })
             .catch(error => {
@@ -166,6 +171,8 @@ const EditArticle = (Component) => {
                     setTitle(data.title);
                     setSummary(data.summary);
                     setContent(data.content);
+                    setPublishedDateTimeString(getDateString(data.publishedDateTime));
+                    setCreatedDateTimeString(getDateString(data.createdDateTime));
 
                     setShowSuccess(true)
                     setTimeout(() => setShowSuccess(false),3000);
@@ -194,6 +201,15 @@ const EditArticle = (Component) => {
 
         setEditorState(editorState);
         setContent(getHtml(editorState));
+    }
+
+    const getDateString = (receivedDateString) => {
+        var date = new Date(receivedDateString);
+        //Pad with 0s
+        const dateString = date.getFullYear() + "-" +  ("0" + (date.getMonth() + 1)).slice(-2) + "-" + + ("0" + date.getDate()).slice(-2)  +
+             " " + ("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2);
+        console.log("DateString : " + dateString);
+        return dateString;
     }
 
     const setEditor = (inEditor) => {
@@ -231,6 +247,10 @@ const EditArticle = (Component) => {
     const labelStyle = {
         textAlign: 'left',
         padding : '5px'
+    }
+
+    const createdDateLabelStyle = {
+        textAlign: 'left',
     }
 
     const headerAccentButtonStyle = {
@@ -307,7 +327,24 @@ const EditArticle = (Component) => {
                                     onChange={e => setTitle(e.target.value)}
                                 />
                             </Form.Group>
-                            <Form.Group>
+                            <br/>
+                            <Form.Group as={Col} className={'mb-3'}>
+                                <div style={createdDateLabelStyle}>
+                                    <Form.Label>Created on</Form.Label>
+                                </div>
+                                <Form.Text >{createdDateTimeString}</Form.Text>
+                            </Form.Group>
+                            <br/>
+                            <Form.Group as={Col} className={'mb-3'}>
+                                <div style={createdDateLabelStyle}>
+                                    <Form.Label>Last published on (Will be the same as created day if never published)</Form.Label>
+                                </div>
+                                <Form.Text >{publishedDateTimeString}</Form.Text>
+                            </Form.Group>
+
+                            <br/>
+
+                            <Form.Group as={Col} className={'mb-3'}>
                                 <div style={labelStyle}>
                                     <Form.Label>Summary</Form.Label>
                                 </div>

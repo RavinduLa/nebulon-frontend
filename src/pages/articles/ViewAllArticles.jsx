@@ -1,3 +1,8 @@
+/*
+* @Author = A.M.W.W.R.L. Wataketiya (MS2346644)
+* Component to view all published articles
+* */
+
 import {Component} from "react";
 import ArticleService from "../../services/ArticleService";
 import {Button, Card, CardText, CardTitle, Col, Row} from "react-bootstrap";
@@ -43,7 +48,17 @@ class ViewAllArticles extends Component{
     articleItemEmailStyle = {
         float : 'left',
         textAlign: 'left',
-        color : '#8C8AFF'
+        color : '#8C8AFF',
+        marginLeft: '5px',
+        marginTop: '6px',
+    }
+
+    articleItemEmailLabelStyle = {
+        float : 'left',
+        textAlign: 'left',
+        color : 'black',
+        marginLeft: '20px',
+        marginTop: '6px',
     }
     commentButtonStyle = {
         float: 'left',
@@ -80,7 +95,7 @@ class ViewAllArticles extends Component{
                                         </Card.Header>
 
                                         <Card.Body className={'bg-transparent border-0'}>
-                                            <CardText style={this.articleItemEmailStyle}>{article.authorId}</CardText>
+
                                             <CardText style={this.articleItemSummaryStyle}>{article.summary}</CardText>
                                         </Card.Body>
 
@@ -91,6 +106,8 @@ class ViewAllArticles extends Component{
                                                 Read
                                             </Button>
                                             <Button style={this.commentButtonStyle}>Comment</Button>
+                                            <CardText style={this.articleItemEmailLabelStyle}>By</CardText>
+                                            <CardText style={this.articleItemEmailStyle}>{article.authorId}</CardText>
                                         </Card.Footer>
 
                                     </Card>
@@ -100,13 +117,6 @@ class ViewAllArticles extends Component{
                                     <br/>
                                     <br/>
 
-                                    {/*<h4 style={this.articleItemHeaderStyle}>{article.title}</h4>
-                                    <p style={this.articleItemEmailStyle}>{article.authorId}</p>
-
-                                    <p style={this.articleItemSummaryStyle}>{article.summary}</p>*/}
-
-
-                                    {/*<div dangerouslySetInnerHTML={{ __html:article.content }} />*/}
                                 </div>
                             ))
                     }

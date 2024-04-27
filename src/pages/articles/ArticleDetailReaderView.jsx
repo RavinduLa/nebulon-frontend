@@ -73,6 +73,15 @@ const ArticleDetailReaderView = (Component) => {
 
     }, []);
 
+    const getDateString = (receivedDateString) => {
+        var date = new Date(receivedDateString);
+        //Pad with 0s
+        const dateString = date.getFullYear() + "-" +  ("0" + (date.getMonth() + 1)).slice(-2) + "-" + + ("0" + date.getDate()).slice(-2)  +
+            " " + ("0" + date.getHours()).slice(-2) + ":" + ("0" + date.getMinutes()).slice(-2);
+        console.log("DateString : " + dateString);
+        return dateString;
+    }
+
     const headerStyle = {
         float : 'left',
         textAlign: 'left',
@@ -94,17 +103,17 @@ const ArticleDetailReaderView = (Component) => {
                 <Card>
                     <Card.Header>
                         <CardTitle>{article.title}</CardTitle>
+                        <CardText>By {article.authorId}</CardText>
                     </Card.Header>
                     <Card.Body>
                         <CardText style={contentStyle} >{article.summary}</CardText>
                         <CardText style={contentStyle}  dangerouslySetInnerHTML={{__html: article.content}} />
                     </Card.Body>
                     <Card.Footer>
-                        <CardText>Published on {article.publishedDateTime}</CardText>
+                        <CardText>Published on {getDateString(article.publishedDateTime)}</CardText>
                     </Card.Footer>
                 </Card>
                 <br/>
-               {/* <div className={'container'} style={contentStyle} dangerouslySetInnerHTML={{__html: article.content}} />*/}
             </div>
 
         </div>

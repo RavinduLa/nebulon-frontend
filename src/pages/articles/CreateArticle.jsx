@@ -152,7 +152,8 @@ class  CreateArticle extends Component {
                                         onChange={this.onChange}
                                     />
                                 </Form.Group>
-                                <Form.Group>
+                                <br />
+                                <Form.Group as={Col} className={'mb-3'}>
                                     <div style={this.labelStyle}>
                                         <Form.Label>Summary</Form.Label>
                                     </div>
