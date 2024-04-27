@@ -9,6 +9,13 @@ import MainNavbar from "./components/navbars/MainNavbar";
 import LoginNeeded from "./pages/error/LoginNeeded";
 import NoPermission from "./pages/error/NoPermission";
 import CreateArticle from "./pages/articles/CreateArticle";
+import ArticleMain from "./pages/articles/ArticleMain";
+import ViewAllArticles from "./pages/articles/ViewAllArticles";
+import '../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import ArticleDetailReaderView from "./pages/articles/ArticleDetailReaderView";
+import ViewAuthorArticles from "./pages/articles/ViewAuthorArticles";
+import ArticleDetailAuthorPreview from "./pages/articles/ArticleDetailAuthorPreview";
+import EditArticle from "./pages/articles/EditArticle";
 
 function App() {
   return (
@@ -23,7 +30,13 @@ function App() {
             <Route path={"/no-permission"} element={<NoPermission/>} />
 
             {/*Articles*/}
-            <Route path={"/articles/create-article"} element={<CreateArticle/>} />
+            <Route path={"/articles-main"} element={<ArticleMain/>} />
+            <Route path={"/create-article"} element={<CreateArticle/>} />
+            <Route path={"/view-articles"} element={<ViewAllArticles />} />
+            <Route path={"/view-articles-author"} element={<ViewAuthorArticles />} />
+            <Route path={"/article-detail-reader/:id"} element={<ArticleDetailReaderView />} />
+            <Route path={"/article-detail-author-preview/:id"} element={<ArticleDetailAuthorPreview />} />
+            <Route path={"/article-edit-view/:id"} element={<EditArticle />} />
 
 
         </Routes>
