@@ -8,6 +8,7 @@ import {useAuth0} from "@auth0/auth0-react";
 import {userEmailString, userAccessTokenString, userLoginStatusString} from "../../constants/UserConstants";
 import {Button, Container, Nav, Navbar, NavDropdown} from "react-bootstrap";
 import {Link} from "react-router-dom";
+import {confirmAlert} from "react-confirm-alert";
 
 function MainNavbar(props) {
     const {loginWithRedirect, logout, user, isAuthenticated, isLoading, getAccessTokenSilently, handleRedirectCallback} = useAuth0();
@@ -73,10 +74,41 @@ function MainNavbar(props) {
         await setLoginStatusToSessionStorage(false);
     }
 
+    const requestLogout = async () => {
+        confirmAlert({
+            title: "Logout",
+            message: "Do you want to logout?",
+            buttons: [
+                {
+                    label:"Logout",
+                    onClick: logoutUser
+                },
+                {
+                    label: "Cancel",
+
+                }
+            ]
+        });
+    }
+
+    const navigateToAuthorDashbaord = () => {
+        window.location = `/author-dashboard`;
+    }
+
+    const navbarBrandStyle = {
+        color : '#8C8AFF',
+        fontWeight: 'bold',
+    }
+
+    const emailDropDownStyle = {
+        color : '#8C8AFF',
+        fontSize: '13px',
+    }
+
     return(
         <Navbar collapseOnSelect expand="lg">
             <Container>
-                <Link to={'/'} className={'navbar-brand'}><h3>Nebulon</h3></Link>
+                <Link to={'/'} style={navbarBrandStyle} className={'navbar-brand'}><h3>Nebulon</h3></Link>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto"></Nav>
@@ -84,8 +116,10 @@ function MainNavbar(props) {
                         {
                             isAuthenticated ? (
                                 <NavDropdown title={user.name}>
-                                    <NavDropdown.Item>{user.email}</NavDropdown.Item>
-                                    <NavDropdown.Item onClick={ logoutUser }>Logout</NavDropdown.Item>
+                                    <NavDropdown.Item onClick={navigateToAuthorDashbaord}>Dashboard</NavDropdown.Item>
+                                    {/*<NavDropdown.Item style={emailDropDownStyle}>{user.email}</NavDropdown.Item>*/}
+
+                                    <NavDropdown.Item onClick={ requestLogout }>Logout</NavDropdown.Item>
                                 </NavDropdown>
                                 )
                                 :

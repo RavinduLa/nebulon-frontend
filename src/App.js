@@ -1,10 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
 import React from "react";
-import {BrowserRouter as Router, Redirect, Routes, Route} from "react-router-dom";
+import {BrowserRouter as Router, Navigate, Routes, Route} from "react-router-dom";
 
 
-import Home from "./pages/home/Home";
+import HomePrev from "./pages/home/HomePrev";
 import MainNavbar from "./components/navbars/MainNavbar";
 import LoginNeeded from "./pages/error/LoginNeeded";
 import NoPermission from "./pages/error/NoPermission";
@@ -16,6 +16,9 @@ import ArticleDetailReaderView from "./pages/articles/ArticleDetailReaderView";
 import ViewAuthorArticles from "./pages/articles/ViewAuthorArticles";
 import ArticleDetailAuthorPreview from "./pages/articles/ArticleDetailAuthorPreview";
 import EditArticle from "./pages/articles/EditArticle";
+import Error404 from "./pages/error/Error404";
+import AuthorDashboard from "./pages/dashboard/AuthorDashboard";
+import Home from "./pages/home/Home";
 
 function App() {
   return (
@@ -24,10 +27,15 @@ function App() {
           <MainNavbar />
         <Routes>
           <Route exact path="/" element={<Home/>} />
+          <Route exact path="/home-prev" element={<HomePrev/>} />
 
             {/*Authenticated and Authorization*/}
             <Route path={"/login-needed"} element={<LoginNeeded/>} />
             <Route path={"/no-permission"} element={<NoPermission/>} />
+            <Route path={"/error-not-found"} element={<Error404/>} />
+
+
+            <Route path={"/author-dashboard"} element={<AuthorDashboard/>} />
 
             {/*Articles*/}
             <Route path={"/articles-main"} element={<ArticleMain/>} />
@@ -37,6 +45,14 @@ function App() {
             <Route path={"/article-detail-reader/:id"} element={<ArticleDetailReaderView />} />
             <Route path={"/article-detail-author-preview/:id"} element={<ArticleDetailAuthorPreview />} />
             <Route path={"/article-edit-view/:id"} element={<EditArticle />} />
+
+
+
+          {/*Default route - 404*/}
+          <Route
+              path="*"
+              element={<Navigate to="/error-not-found" replace={true} />}
+          />
 
 
         </Routes>
