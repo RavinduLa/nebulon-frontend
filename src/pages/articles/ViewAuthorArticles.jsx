@@ -5,7 +5,7 @@
 
 import {Component} from "react";
 import ArticleService from "../../services/ArticleService";
-import {Button, Card, CardText, Modal} from "react-bootstrap";
+import {Badge, Button, Card, CardText, Col, Modal, Row} from "react-bootstrap";
 import CheckAuth from "../../services/CheckAuth";
 import data from "bootstrap/js/src/dom/data";
 import Toast1 from "../../components/toasts/Toast1";
@@ -108,6 +108,12 @@ class ViewAuthorArticles extends Component {
         textAlign: 'left',
     }
 
+    badgeStyle = {
+        float : 'left',
+        marginLeft: '20px',
+        marginTop: '9px'
+    }
+
     articleItemEmailStyle = {
         float : 'left',
         textAlign: 'left',
@@ -176,6 +182,9 @@ class ViewAuthorArticles extends Component {
 
                                         <Card.Body className={'bg-transparent border-0'}>
                                             <CardText style={this.articleItemSummaryStyle}>{article.summary}</CardText>
+
+
+
                                         </Card.Body>
 
                                         <Card.Footer className={'border-0 bg-transparent'}>
@@ -193,6 +202,11 @@ class ViewAuthorArticles extends Component {
                                             >
                                                 Delete
                                             </Button>
+                                            {
+                                                article.published ?
+                                                    <Badge pill bg={'success'} style={this.badgeStyle}>Published</Badge> :
+                                                    <Badge pill bg={'secondary'} style={this.badgeStyle} >Not Published</Badge>
+                                            }
                                         </Card.Footer>
 
                                     </Card>
