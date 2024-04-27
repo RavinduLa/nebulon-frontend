@@ -4,7 +4,7 @@ import React from "react";
 import {BrowserRouter as Router, Navigate, Routes, Route} from "react-router-dom";
 
 
-import Home from "./pages/home/Home";
+import HomePrev from "./pages/home/HomePrev";
 import MainNavbar from "./components/navbars/MainNavbar";
 import LoginNeeded from "./pages/error/LoginNeeded";
 import NoPermission from "./pages/error/NoPermission";
@@ -18,6 +18,7 @@ import ArticleDetailAuthorPreview from "./pages/articles/ArticleDetailAuthorPrev
 import EditArticle from "./pages/articles/EditArticle";
 import Error404 from "./pages/error/Error404";
 import AuthorDashboard from "./pages/dashboard/AuthorDashboard";
+import Home from "./pages/home/Home";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <MainNavbar />
         <Routes>
           <Route exact path="/" element={<Home/>} />
+          <Route exact path="/home-prev" element={<HomePrev/>} />
 
             {/*Authenticated and Authorization*/}
             <Route path={"/login-needed"} element={<LoginNeeded/>} />
