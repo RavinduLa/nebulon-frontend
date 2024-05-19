@@ -23,7 +23,7 @@ To install the Nebulon frontend on your local machine, follow these steps:
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/nebulon-frontend.git
+   git clone https://github.com/RavinduLa/nebulon-frontend.git
    ```
 
 2. **Navigate to the project directory:**
