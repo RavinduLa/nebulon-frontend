@@ -11,7 +11,7 @@ Welcome to the Nebulon Frontend repository. This is the ReactJS-based frontend f
 - [Backend Dependency](#backend-dependency)
 
 ## Introduction
-This instructions will guide you through the steps to successfully clone and run the frontend application for nebulon.
+This instructions will guide you through the steps to successfully clone and run the frontend application for Nebulon.
 
 ## Features
 
