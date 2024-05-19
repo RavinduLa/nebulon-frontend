@@ -4,6 +4,7 @@ Welcome to the Nebulon Frontend repository. This is the ReactJS-based frontend f
 
 ## Table of Contents
 - [Introduction](#introduction)
+- [Features](#features)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [Running the Application](#running-the-application)
@@ -11,6 +12,11 @@ Welcome to the Nebulon Frontend repository. This is the ReactJS-based frontend f
 
 ## Introduction
 This instructions will guide you through the steps to successfully clone and run the frontend application for nebulon.
+
+## Features
+
+- User authentication and authorization
+- Articles realated functions incliding article creation, editing, viewing and deletion
 
 ## Prerequisites
 Before you begin, ensure you have met the following requirements:
